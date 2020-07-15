@@ -12,13 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/*
-* Sets a time of non-doing for a function
-*/
-
-
 /**
- * Gives a random greeting to the page with the interval 3 sec.
+ * Gives a random greeting to the page with the interval 1.5 sec.
  */
 var upd_time = 1500;
 
