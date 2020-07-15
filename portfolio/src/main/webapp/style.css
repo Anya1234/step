@@ -4,6 +4,22 @@
   width: 650px;
 }
 
-#greeting-container {
+h1{
+    color:crimson;
+}
+
+greetings {
   margin-top: 20px;
+  color:cornflowerblue;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 100px;
+}
+
+body {
+  background-color:white;
+}
+
+menu {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 50px;
 }

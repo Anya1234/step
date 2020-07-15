@@ -13,11 +13,13 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Gives a random greeting to the page with the interval 1.5 sec.
  */
+var upd_time = 1500;
+
 function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+  const greetings = 
+            ['Hello!', 'Привет!', 'مرحبا!', 'Ciao!', 'Buna!', '你好！', 'Bonjour!', '¡Hola!'];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
@@ -26,3 +28,7 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+setInterval(addRandomGreeting, upd_time);
+
+
