@@ -20,10 +20,12 @@ var upd_time = 1500;
 /*
 *fetches a random greeting from server and puts it to HTML
 */
+
 function addRandomGreeting() {
   fetch('/random-greeting').then(response => response.text()).then((greeting) => {
     document.getElementById('greeting-container').innerText = greeting;
   });
 }
 
+addRandomGreeting();
 setInterval(addRandomGreeting, upd_time);
