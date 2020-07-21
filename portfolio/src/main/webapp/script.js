@@ -17,18 +17,13 @@
  */
 var upd_time = 1500;
 
+/*
+*fetches a random greeting from server and puts it to HTML
+*/
 function addRandomGreeting() {
-  const greetings = 
-            ['Hello!', 'Привет!', 'مرحبا!', 'Ciao!', 'Buna!', '你好！', 'Bonjour!', '¡Hola!'];
-
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  fetch('/random-greeting').then(response => response.text()).then((greeting) => {
+    document.getElementById('greeting-container').innerText = greeting;
+  });
 }
 
 setInterval(addRandomGreeting, upd_time);
-
-
