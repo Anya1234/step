@@ -4,7 +4,7 @@
 
 function playNote(e) {
   var audio = document.querySelector(`audio[data-key = "${e}"]`);
-  audio.currentTime = 0;  
+  audio.currentTime = 0;  //if someone presses the key before audio has ended, it should start from the begin
   audio.play();
 }
 
@@ -18,5 +18,6 @@ $(document).ready(function(){
     playNote(key);
   });
 });
+
 
 
