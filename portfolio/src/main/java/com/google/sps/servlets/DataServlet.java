@@ -15,6 +15,8 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,9 +26,25 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  private List<String> greetings;
+
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("<h1>Hello world!</h1>");
+  public void init() { //creates list of greetings
+    greetings = new ArrayList<>();
+    greetings.add("Hello!");
+    greetings.add("Привет!");
+    greetings.add("مرحبا!");
+    greetings.add("Ciao!");
+    greetings.add("Buna!");
+    greetings.add("你好！");
+    greetings.add("Bonjour!");
+    greetings.add("¡Hola!");
+  }
+
+  @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException { //choose random greeting
+    String greeting = greetings.get((int) (Math.random() * greetings.size()));
+    response.setContentType("text/html;charset=UTF-8");
+    response.getWriter().println(greeting);
   }
 }
