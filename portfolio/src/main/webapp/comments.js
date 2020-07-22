@@ -19,7 +19,6 @@
 function addComment() {
   fetch('/handle-comments').then(response => response.json()).then((comment) => {
     document.getElementById('comments').innerText = comment;
-    console.log("works");
   });
 }
 
