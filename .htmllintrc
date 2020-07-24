@@ -1,5 +1,6 @@
 {
     "plugins": [],  // npm modules to load
+
     "maxerr": false,
     "raw-ignore-regex": false,
     "attr-bans": [
@@ -15,14 +16,16 @@
         "style",
         "width"
     ],
-    "indent-delta": true,
+    "indent-delta": false,
     "indent-style": "nonmixed",
-    "indent-width": 2,
+    "indent-width": 4,
     "indent-width-cont": false,
     "spec-char-escape": true,
     "text-ignore-regex": false,
     "tag-bans": [
-        "style"
+        "style",
+        "b",
+        "i"
     ],
     "tag-close": true,
     "tag-name-lowercase": true,
@@ -41,7 +44,7 @@
     "attr-validate": true,
     "id-no-dup": true,
     "id-class-no-ad": true,
-    "id-class-style": "dash",
+    "id-class-style": "underscore",
     "class-no-dup": true,
     "class-style": false,
     "id-class-ignore-regex": false,
@@ -69,4 +72,3 @@
     "table-req-header": false,
     "tag-req-attr": false
 }
-
