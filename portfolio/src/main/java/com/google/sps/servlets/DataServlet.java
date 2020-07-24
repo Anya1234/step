@@ -21,6 +21,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.sps.data.Message;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 
 /*
 *  Servlet that adds comments
@@ -28,31 +35,58 @@ import com.google.gson.Gson;
 @WebServlet("/handle-comments")
 public class DataServlet extends HttpServlet {
 
-  private ArrayList<String> messages;
-
   @Override
   public void init() {
-    messages = new ArrayList<>();
+    
   }
   
   
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = request.getParameter("add-content");
-    messages.add(text);
+    String color = request.getParameter("color");
+    String font_size = request.getParameter("font_size");
+    long time = System.currentTimeMillis();
+    if (text == "") {
+        response.sendRedirect("comment.html");
+        return;
+    }
+
+    Entity commentEntity = new Entity("Message");
+    commentEntity.setProperty("text", text);
+    commentEntity.setProperty("color", color);
+    commentEntity.setProperty("font_size", font_size);
+    commentEntity.setProperty("time", time);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
+
     response.sendRedirect("comment.html");
   }
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException { 
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Query query = new Query("Message").addSort("time", SortDirection.DESCENDING);;
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+    ArrayList<Message> messages = new ArrayList<>();
+    for (Entity entity : results.asIterable()) { 
+        long id = entity.getKey().getId();
+        String text = (String) entity.getProperty("text");
+        String color = (String) entity.getProperty("color");
+        String font_size = (String) entity.getProperty("font_size");
+        Message message = new Message(id, text, color, font_size);
+
+        messages.add(message);
+    } 
+    
     String json = convertToJson(messages);
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
-
-   private String convertToJson (ArrayList list) {
+   private String convertToJson (ArrayList<Message> message) {
     Gson gson = new Gson();
-    String json = gson.toJson(list);
+    String json = gson.toJson(message);
     return json;
   }
 }

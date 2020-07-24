@@ -12,23 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
-*fetches current comments from server and puts it to HTML
-*/
-function addComment() {
-  fetch('/handle-comments').then((response)=>
-    response.json()).then((comments)=> {
-    console.log(comments);
-    for (let i = 0; i < comments.length; i++) {
-      const p = document.createElement('p');
-      const message = comments[i];
-      console.log(message['text']);
-      p.innerText = message['text'];
-      p.style.color = message['color'];
-      p.style.fontSize = message['font_size'];
-      document.body.prepend(p);
-    }
-  });
-}
+package com.google.sps.data;
 
-addComment();
+/** item coding comment. */
+public final class Message {
+
+  private final long id;
+  private final String text;
+  private final String color;
+  private final String font_size;
+
+  public Message(long id, String text, String color, String font_size) {
+    this.id = id;
+    this.text = text;
+    this.color = color;
+    this.font_size = font_size;
+  }
+}
