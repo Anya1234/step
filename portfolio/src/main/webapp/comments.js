@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/*
+/**
 *fetches current comments from server and puts it to HTML
 */
-
 function addComment() {
+  anutka_dev_server
   fetch('/handle-comments').then(response => response.json()).then((comments) => {
     console.log(comments);
     for (var i = 0; i < comments.length; i++) {
@@ -27,6 +27,10 @@ function addComment() {
         p.style.fontSize = message["font_size"]; 
         document.body.prepend(p);
     }
+=======
+  fetch('/handle-comments').then((response)=>response.json()).then((comment)=> {
+    document.getElementById('comments').innerText = comment;
+    master
   });
 }
 
