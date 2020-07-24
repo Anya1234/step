@@ -12,20 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/*
+/**
 *fetches current comments from server and puts it to HTML
 */
-
 function addComment() {
-  fetch('/handle-comments').then(response => response.json()).then((comments) => {
+  fetch('/handle-comments').then((response)=>response.json()).then((comments)=>{
     console.log(comments);
-    for (var i = 0; i < comments.length; i++) {
-        let p = document.createElement('p');
-        var message = comments[i];
-        p.innerText = message["text"];
-        p.style.color = message["color"];
-        p.style.fontSize = message["font_size"]; 
-        document.body.prepend(p);
+    for (let i = 0; i < comments.length; i++) {
+      const p = document.createElement('p');
+      const message = comments[i];
+      p.innerText = message['text'];
+      p.style.color = message['color'];
+      p.style.fontSize = message['font_size'];
+      document.body.prepend(p);
     }
   });
 }
