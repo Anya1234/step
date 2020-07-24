@@ -30,8 +30,8 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 
 /*
-*  Servlet that adds comments
-*/
+ *  Servlet that adds comments
+ */
 @WebServlet("/handle-comments")
 public class DataServlet extends HttpServlet {
 
@@ -66,23 +66,25 @@ public class DataServlet extends HttpServlet {
         Query query = new Query("Message").addSort("time", SortDirection.DESCENDING);;
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
-        ArrayList<Message> messages = new ArrayList<>();
-        for (Entity entity : results.asIterable()) { 
+        ArrayList < Message > messages = new ArrayList < > ();
+        for (Entity entity: results.asIterable()) {
             long id = entity.getKey().getId();
             String text = (String) entity.getProperty("text");
             String color = (String) entity.getProperty("color");
             String font_size = (String) entity.getProperty("font_size");
             Message message = new Message(id, text, color, font_size);
             messages.add(message);
-        } 
-        
+        }
+
         String json = convertToJson(messages);
         response.setContentType("application/json;");
         response.getWriter().println(json);
     }
-    private String convertToJson (ArrayList<Message> message) {
+    private String convertToJson(ArrayList < Message > message) {
         Gson gson = new Gson();
         String json = gson.toJson(message);
         return json;
     }
+}
+
 }
