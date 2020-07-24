@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/*
+/**
 *fetches current comments from server and puts it to HTML
 */
-
 function addComment() {
-  fetch('/handle-comments').then(response => response.json()).then((comment) => {
+  fetch('/handle-comments').then((response)=>response.json()).then((comment)=> {
     document.getElementById('comments').innerText = comment;
   });
 }
