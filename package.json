@@ -1,0 +1,26 @@
+{
+  "name": "step",
+  "version": "1.0.0",
+  "description": "This repo contains the projects you'll work on for the first half of STEP. This work is based on the [Google Software Product Sprint](https://g.co/softwareproductsprint) program.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "htmllint-cli": "^0.0.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anya1234/step.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Anya1234/step/issues"
+  },
+  "homepage": "https://github.com/Anya1234/step#readme"
+}
