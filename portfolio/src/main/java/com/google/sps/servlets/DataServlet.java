@@ -45,7 +45,6 @@ public class DataServlet extends HttpServlet {
     String font_size = request.getParameter("font_size");
     long time = System.currentTimeMillis();
     if (text == "") {
-      response.sendRedirect("comment.html");
       return;
     }
 
@@ -64,16 +63,14 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Query query = new Query("Message").addSort("time", SortDirection.DESCENDING);
-    ;
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     ArrayList<Message> messages = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
-      long id = entity.getKey().getId();
       String text = (String) entity.getProperty("text");
       String color = (String) entity.getProperty("color");
       String font_size = (String) entity.getProperty("font_size");
-      Message message = new Message(id, text, color, font_size);
+      Message message = new Message(text, color, font_size);
       messages.add(message);
     }
 
