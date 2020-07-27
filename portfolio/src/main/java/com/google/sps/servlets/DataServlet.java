@@ -28,6 +28,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+
 
 /*
  *  Servlet that adds comments
@@ -40,10 +43,12 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    UserService userService = UserServiceFactory.getUserService();
     String text = request.getParameter("add-content");
     String color = request.getParameter("color");
     String font_size = request.getParameter("font_size");
     long time = System.currentTimeMillis();
+    String username = userService.getCurrentUser().getEmail();
     if (text == "") {
       return;
     }
@@ -53,15 +58,25 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty("color", color);
     commentEntity.setProperty("font_size", font_size);
     commentEntity.setProperty("time", time);
-
+    commentEntity.setProperty("username", username);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
-
     response.sendRedirect("comment.html");
   }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+     System.out.println("aaaaa");
+     UserService userService = UserServiceFactory.getUserService();
+     System.out.println(userService.isUserLoggedIn());
+     System.out.println();
+     if (!userService.isUserLoggedIn()) {
+      System.out.println("Hello");
+      String url = userService.createLoginURL("/handle-comments");
+      response.sendRedirect(url);
+      return;
+     }
+
     Query query = new Query("Message").addSort("time", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
@@ -70,7 +85,8 @@ public class DataServlet extends HttpServlet {
       String text = (String) entity.getProperty("text");
       String color = (String) entity.getProperty("color");
       String font_size = (String) entity.getProperty("font_size");
-      Message message = new Message(text, color, font_size);
+      String username = (String) entity.getProperty("username");
+      Message message = new Message(text, color, font_size, username);
       messages.add(message);
     }
 

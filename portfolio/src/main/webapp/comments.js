@@ -22,8 +22,7 @@ function addComment() {
     for (let i = 0; i < comments.length; i++) {
       const p = document.createElement('p');
       const message = comments[i];
-      console.log(message['text']);
-      p.innerText = message['text'];
+      p.innerText = message['user'] + ":    " + message['text'];
       p.style.color = message['color'];
       p.style.fontSize = message['font_size'];
       document.body.prepend(p);

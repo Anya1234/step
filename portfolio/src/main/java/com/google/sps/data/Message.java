@@ -20,10 +20,12 @@ public final class Message {
   private final String text;
   private final String color;
   private final String font_size;
+  private final String username;
 
-  public Message(String text, String color, String font_size) {
+  public Message(String text, String color, String font_size, String username) {
     this.text = text;
     this.color = color;
     this.font_size = font_size;
+    this.username = username;
   }
 }
