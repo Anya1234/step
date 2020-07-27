@@ -17,13 +17,11 @@ package com.google.sps.data;
 /** item coding comment. */
 public final class Message {
 
-  private final long id;
   private final String text;
   private final String color;
   private final String font_size;
 
-  public Message(long id, String text, String color, String font_size) {
-    this.id = id;
+  public Message(String text, String color, String font_size) {
     this.text = text;
     this.color = color;
     this.font_size = font_size;
