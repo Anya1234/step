@@ -28,11 +28,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 /*
  *  Servlet that adds comments
  */
-@WebServlet("comment.html")
+@WebServlet("/render-comments")
 public class RenderCommentsServlet extends HttpServlet {
 
   @Override
@@ -40,6 +42,8 @@ public class RenderCommentsServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+      UserService userService = UserServiceFactory.getUserService();
+
     Query query = new Query("Message").addSort("time", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
@@ -48,7 +52,8 @@ public class RenderCommentsServlet extends HttpServlet {
       String text = (String) entity.getProperty("text");
       String color = (String) entity.getProperty("color");
       String font_size = (String) entity.getProperty("font_size");
-      Message message = new Message(text, color, font_size);
+      String username = (String) entity.getProperty("username");
+      Message message = new Message(text, color, font_size, username);
       messages.add(message);
     }
 

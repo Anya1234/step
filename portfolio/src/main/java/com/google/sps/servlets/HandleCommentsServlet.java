@@ -28,6 +28,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 /*
  *  Servlet that adds comments
@@ -44,16 +46,24 @@ public class HandleCommentsServlet extends HttpServlet {
     String color = request.getParameter("color");
     String font_size = request.getParameter("font_size");
     long time = System.currentTimeMillis();
+
+    UserService userService = UserServiceFactory.getUserService();
+    if (!userService.isUserLoggedIn()) {
+      String urlToRedirectToAfterUserLogsIn = "/handle-comments";
+      response.sendRedirect(userService.createLoginURL(urlToRedirectToAfterUserLogsIn));
+      return;
+    } 
+
+    String username = userService.getCurrentUser().getNickname();
     if (text == "") {
       return;
     }
-
     Entity commentEntity = new Entity("Message");
     commentEntity.setProperty("text", text);
     commentEntity.setProperty("color", color);
     commentEntity.setProperty("font_size", font_size);
     commentEntity.setProperty("time", time);
-
+    commentEntity.setProperty("username", username);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
 
