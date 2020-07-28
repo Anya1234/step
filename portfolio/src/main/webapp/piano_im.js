@@ -19,6 +19,8 @@ notes.set('E2', 'white');
 
 const svgns = 'http://www.w3.org/2000/svg';
 const svg = document.getElementsByTagName('svg')[0];
+svg.setAttributeNS(null, 'width', 10000);
+svg.setAttributeNS(null, 'height', 10000);
 const whiteWidth = 100;
 const blackWidth = 30;
 const whiteHeight = '300';
