@@ -15,6 +15,7 @@
 /**
 *fetches current comments from server and puts it to HTML
 */
+
 function addComment() {
   fetch('/handle-comments').then((response)=>
     response.json()).then((comments)=> {
