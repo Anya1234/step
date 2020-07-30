@@ -23,20 +23,20 @@ svg.setAttributeNS(null, 'width', 10000);
 svg.setAttributeNS(null, 'height', 10000);
 const whiteWidth = 100;
 const blackWidth = 30;
-const whiteHeight = '300';
-const blackHeight = '200';
+const whiteHeight = 300;
+const blackHeight = 200;
 let x = 0;
-y = '0';
+const y = 0;
 for (const name of notes.keys()) {
   const rect = document.createElementNS(svgns, 'rect');
   rect.setAttributeNS(null, 'x', x);
   rect.setAttributeNS(null, 'y', y);
   rect.setAttributeNS(null, 'data-key', name);
+  rect.setAttributeNS(null, 'class', 'key');
   if (notes.get(name) == 'white') {
     rect.setAttributeNS(null, 'height', whiteHeight);
     rect.setAttributeNS(null, 'width', whiteWidth);
     rect.setAttributeNS(null, 'fill', 'white');
-    rect.setAttributeNS(null, 'class', 'key');
     rect.setAttributeNS(null, 'stroke', 'black');
     rect.setAttributeNS(null, 'stroke-width', '5');
     x += whiteWidth;
@@ -44,7 +44,6 @@ for (const name of notes.keys()) {
     rect.setAttributeNS(null, 'height', blackHeight);
     rect.setAttributeNS(null, 'width', blackWidth);
     rect.setAttributeNS(null, 'fill', 'black');
-    rect.setAttributeNS(null, 'class', 'key');
     x += blackWidth;
   }
   svg.appendChild(rect);
