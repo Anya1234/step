@@ -17,13 +17,9 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.gson.Gson;
-import com.google.sps.data.Message;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
  *  Servlet that adds comments
  */
 @WebServlet("/handle-comments")
-public class DataServlet extends HttpServlet {
+public class HandleCommentsServlet extends HttpServlet {
 
   @Override
   public void init() {}
@@ -44,44 +40,27 @@ public class DataServlet extends HttpServlet {
     String color = request.getParameter("color");
     String font_size = request.getParameter("font_size");
     long time = System.currentTimeMillis();
-    if (text == "") {
+
+    UserService userService = UserServiceFactory.getUserService();
+    if (!userService.isUserLoggedIn()) {
+      String urlToRedirectToAfterUserLogsIn = "/handle-comments";
+      response.sendRedirect(userService.createLoginURL(urlToRedirectToAfterUserLogsIn));
       return;
     }
 
+    String username = userService.getCurrentUser().getNickname();
+    if (text == "") {
+      return;
+    }
     Entity commentEntity = new Entity("Message");
     commentEntity.setProperty("text", text);
     commentEntity.setProperty("color", color);
     commentEntity.setProperty("font_size", font_size);
     commentEntity.setProperty("time", time);
-
+    commentEntity.setProperty("username", username);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
 
     response.sendRedirect("comment.html");
-  }
-
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Message").addSort("time", SortDirection.DESCENDING);
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    PreparedQuery results = datastore.prepare(query);
-    ArrayList<Message> messages = new ArrayList<>();
-    for (Entity entity : results.asIterable()) {
-      String text = (String) entity.getProperty("text");
-      String color = (String) entity.getProperty("color");
-      String font_size = (String) entity.getProperty("font_size");
-      Message message = new Message(text, color, font_size);
-      messages.add(message);
-    }
-
-    String json = convertToJson(messages);
-    response.setContentType("application/json;");
-    response.getWriter().println(json);
-  }
-
-  private String convertToJson(ArrayList<Message> message) {
-    Gson gson = new Gson();
-    String json = gson.toJson(message);
-    return json;
   }
 }

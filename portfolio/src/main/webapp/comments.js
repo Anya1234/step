@@ -1,3 +1,4 @@
+
 // Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,14 +17,13 @@
 *fetches current comments from server and puts it to HTML
 */
 function addComment() {
-  fetch('/handle-comments').then((response)=>
+  fetch('/render-comments').then((response)=>
     response.json()).then((comments)=> {
     console.log(comments);
     for (let i = 0; i < comments.length; i++) {
       const p = document.createElement('p');
       const message = comments[i];
-      console.log(message['text']);
-      p.innerText = message['text'];
+      p.innerText = message['username'] + ':    ' + message['text'];
       p.style.color = message['color'];
       p.style.fontSize = message['font_size'];
       document.body.prepend(p);
