@@ -1,3 +1,4 @@
+  
 // Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,20 +13,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.sps.data;
-
-/** item coding comment. */
-public final class Message {
-
-  private final String text;
-  private final String color;
-  private final String font_size;
-  private final String username;
-
-  public Message(String text, String color, String font_size, String username) {
-    this.text = text;
-    this.color = color;
-    this.font_size = font_size;
-    this.username = username;
-  }
+/**
+*fetches current comments from server and puts it to HTML
+*/
+function addComment() {
+  fetch('/render-comments').then((response)=>
+    response.json()).then((comments)=> {
+    console.log(comments);
+    for (let i = 0; i < comments.length; i++) {
+      const p = document.createElement('p');
+      const message = comments[i];
+      p.innerText = message['username'] + ':    ' + message['text'];
+      p.style.color = message['color'];
+      p.style.fontSize = message['font_size'];
+      document.body.prepend(p);
+    }
+  });
 }
+
+addComment();
