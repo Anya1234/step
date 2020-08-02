@@ -16,6 +16,22 @@
 /**
 *fetches current comments from server and puts it to HTML
 */
+
+function checkUser() {
+  fetch('/check-user').then((response)=>
+  response.json()).then((isLoggedIn)=> {
+    console.log(isLoggedIn);
+    if (isLoggedIn == false) {
+        console.log("ok");
+        document.getElementById("add-content").placeholder = "log in first";
+        document.getElementById("add-content").disabled = true;
+        document.getElementById("color").disabled = true;
+        document.getElementById("font_size").disabled = true;
+        document.getElementById("button").disabled = true;
+        document.getElementById("log").value = "login";
+    }   
+  });
+}
 function addComment() {
   fetch('/render-comments').then((response)=>
     response.json()).then((comments)=> {
@@ -31,4 +47,5 @@ function addComment() {
   });
 }
 
+checkUser();
 addComment();

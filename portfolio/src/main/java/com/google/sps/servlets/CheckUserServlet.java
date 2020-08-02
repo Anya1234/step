@@ -20,44 +20,39 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import java.io.IOException;
+import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.appengine.api.datastore.Key;
 
 /*
  *  Servlet that adds comments
  */
-@WebServlet("/handle-comments")
-public class HandleCommentsServlet extends HttpServlet {
+@WebServlet("/check-user")
+public class CheckUserServlet extends HttpServlet {
 
   @Override
   public void init() {}
 
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String text = request.getParameter("add-content");
-    String color = request.getParameter("color");
-    String font_size = request.getParameter("font_size");
-    long time = System.currentTimeMillis();
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    boolean isLoggedIn = false;
 
     UserService userService = UserServiceFactory.getUserService();
-    String username = userService.getCurrentUser().getNickname();
-
-    if (text.length() == 0) {
-      return;
+    if (userService.isUserLoggedIn()) {
+        isLoggedIn = true;
     }
 
-    Entity commentEntity = new Entity("Message");
-    System.out.println(text);
-    commentEntity.setProperty("text", text);
-    commentEntity.setProperty("color", color);
-    commentEntity.setProperty("font_size", font_size);
-    commentEntity.setProperty("time", time);
-    commentEntity.setProperty("username", username);
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(commentEntity);
+    String json = convertToJson(isLoggedIn);
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
+  }
 
-    response.sendRedirect("comment.html");
+  private String convertToJson(boolean isLoggedIn) {
+    Gson gson = new Gson();
+    String json = gson.toJson(isLoggedIn);
+    return json;
   }
 }

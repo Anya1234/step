@@ -4,13 +4,18 @@
         <meta charset="UTF-8">
         <title>Add feedback</title>
         <link rel="stylesheet" href="style.css">
-        <script src="comments.js"></script>
+        <script src="comment.js"></script>
     </head>
     <body>
-        <p id= "comments"> </p>
+        <p id="comments"> </p>
+        <form action="/log" method="GET"> 
+            <input id="log" type="submit" value="Logout">
+            </input>
+        </form>
+        
         <form action="/handle-comments" method="POST">
 
-        <textarea name="add-content"></textarea>
+        <textarea id="add-content" name="add-content"></textarea>
         <label for="color">Choose color:</label>
         <select id="color" name="color">
                 <option value="grey">grey</option>
@@ -42,7 +47,7 @@
                 <option value="36px">36</option>
                 <option value="38px">38</option>
             </select>
-        <input type="submit" value="Add content" />
+        <input id="button" type="submit" value="Add content" />
 
         </form>
     </body>
