@@ -1,4 +1,3 @@
-
 // Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,24 +13,27 @@
 // limitations under the License.
 
 /**
-*fetches current comments from server and puts it to HTML
+* checks if user is logged in
 */
-
 function checkUser() {
   fetch('/check-user').then((response)=>
-  response.json()).then((isLoggedIn)=> {
+    response.json()).then((isLoggedIn)=> {
     console.log(isLoggedIn);
     if (isLoggedIn == false) {
-        console.log("ok");
-        document.getElementById("add-content").placeholder = "log in first";
-        document.getElementById("add-content").disabled = true;
-        document.getElementById("color").disabled = true;
-        document.getElementById("font_size").disabled = true;
-        document.getElementById("button").disabled = true;
-        document.getElementById("log").value = "login";
-    }   
+      console.log('ok');
+      document.getElementById('add-content').placeholder = 'log in first';
+      document.getElementById('add-content').disabled = true;
+      document.getElementById('color').disabled = true;
+      document.getElementById('font_size').disabled = true;
+      document.getElementById('button').disabled = true;
+      document.getElementById('auth').value = 'login';
+    }
   });
 }
+
+/**
+* fetches current comments from server and puts it to HTML
+*/
 function addComment() {
   fetch('/render-comments').then((response)=>
     response.json()).then((comments)=> {

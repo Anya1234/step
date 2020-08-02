@@ -14,9 +14,6 @@
 
 package com.google.sps.servlets;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import java.io.IOException;
@@ -28,8 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 /*
  *  Servlet that adds comments
  */
-@WebServlet("/log")
-public class LogServlet extends HttpServlet {
+@WebServlet("/auth")
+public class AuthServlet extends HttpServlet {
 
   @Override
   public void init() {}
@@ -40,11 +37,11 @@ public class LogServlet extends HttpServlet {
     UserService userService = UserServiceFactory.getUserService();
     String urlToRedirect = "/comment.html";
     if (userService.isUserLoggedIn()) {
-       response.sendRedirect(userService.createLogoutURL(urlToRedirect));
-       return;
+      response.sendRedirect(userService.createLogoutURL(urlToRedirect));
+      return;
     } else {
-       response.sendRedirect(userService.createLoginURL(urlToRedirect));
-       return;
+      response.sendRedirect(userService.createLoginURL(urlToRedirect));
+      return;
     }
   }
 }
