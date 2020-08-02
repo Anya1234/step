@@ -21,8 +21,8 @@ function checkUser() {
     console.log(isLoggedIn);
     if (isLoggedIn == false) {
       console.log('ok');
-      document.getElementById('add-content').placeholder = 'log in first';
-      document.getElementById('add-content').disabled = true;
+      document.getElementById('addcontent').placeholder = 'log in first';
+      document.getElementById('addcontent').disabled = true;
       document.getElementById('color').disabled = true;
       document.getElementById('font_size').disabled = true;
       document.getElementById('button').disabled = true;
