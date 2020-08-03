@@ -33,7 +33,6 @@ public class AuthServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    System.out.println();
     UserService userService = UserServiceFactory.getUserService();
     String urlToRedirect = "/comment.html";
     if (userService.isUserLoggedIn()) {

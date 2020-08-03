@@ -20,7 +20,6 @@ function checkUser() {
     response.json()).then((isLoggedIn)=> {
     console.log(isLoggedIn);
     if (isLoggedIn == false) {
-      console.log('ok');
       document.getElementById('addcontent').placeholder = 'log in first';
       document.getElementById('addcontent').disabled = true;
       document.getElementById('color').disabled = true;
