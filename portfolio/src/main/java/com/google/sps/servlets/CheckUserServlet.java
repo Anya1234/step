@@ -34,7 +34,6 @@ public class CheckUserServlet extends HttpServlet {
     UserService userService = UserServiceFactory.getUserService();
     boolean isLoggedIn = userService.isUserLoggedIn();
 
-
     String json = convertToJson(isLoggedIn);
     response.setContentType("application/json;");
     response.getWriter().println(json);

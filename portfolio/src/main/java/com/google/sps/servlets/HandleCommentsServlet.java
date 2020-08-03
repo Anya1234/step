@@ -38,7 +38,7 @@ public class HandleCommentsServlet extends HttpServlet {
     String font_size = request.getParameter("font_size");
     long time = System.currentTimeMillis();
 
-     if (!userService.isUserLoggedIn()) {
+    if (!userService.isUserLoggedIn()) {
       String urlToRedirect = "/comment.html";
       response.sendRedirect(userService.createLoginURL(urlToRedirect));
       return;
