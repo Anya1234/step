@@ -29,6 +29,14 @@ function checkUser() {
   });
 }
 
+function getUploadUrl() {
+    fetch('/upload-url').then((response)=>
+    response.json()).then((url)=> {
+    console.log(url);
+    document.getElementById('addimage').action = url;
+  });
+}
+
 /**
 * fetches current comments from server and puts it to HTML
 */
@@ -47,5 +55,19 @@ function addComment() {
   });
 }
 
+function addImages() {
+  fetch('/render-images').then((response)=>
+    response.json()).then((images)=> {
+    console.log(images);
+    for (let i = 0; i < images.length; i++) {
+      const img = document.createElement('img');
+      img.src = images[i];
+      document.body.prepend(img);
+    }
+  });
+}
+
 checkUser();
+getUploadUrl();
+addImages();
 addComment();
