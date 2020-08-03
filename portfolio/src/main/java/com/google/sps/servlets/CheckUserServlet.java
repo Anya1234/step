@@ -30,16 +30,10 @@ import javax.servlet.http.HttpServletResponse;
 public class CheckUserServlet extends HttpServlet {
 
   @Override
-  public void init() {}
-
-  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    boolean isLoggedIn = false;
-
     UserService userService = UserServiceFactory.getUserService();
-    if (userService.isUserLoggedIn()) {
-      isLoggedIn = true;
-    }
+    boolean isLoggedIn = userService.isUserLoggedIn();
+
 
     String json = convertToJson(isLoggedIn);
     response.setContentType("application/json;");

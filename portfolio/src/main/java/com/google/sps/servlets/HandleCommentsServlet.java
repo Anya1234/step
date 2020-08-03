@@ -32,15 +32,17 @@ import javax.servlet.http.HttpServletResponse;
 public class HandleCommentsServlet extends HttpServlet {
 
   @Override
-  public void init() {}
-
-  @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = request.getParameter("add-content");
     String color = request.getParameter("color");
     String font_size = request.getParameter("font_size");
     long time = System.currentTimeMillis();
 
+     if (!userService.isUserLoggedIn()) {
+      String urlToRedirect = "/comment.html";
+      response.sendRedirect(userService.createLoginURL(urlToRedirect));
+      return;
+    }
     UserService userService = UserServiceFactory.getUserService();
     String username = userService.getCurrentUser().getNickname();
 

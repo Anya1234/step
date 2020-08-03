@@ -29,9 +29,6 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthServlet extends HttpServlet {
 
   @Override
-  public void init() {}
-
-  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     UserService userService = UserServiceFactory.getUserService();
     String urlToRedirect = "/comment.html";

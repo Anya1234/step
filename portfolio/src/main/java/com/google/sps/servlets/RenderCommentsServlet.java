@@ -36,9 +36,6 @@ import javax.servlet.http.HttpServletResponse;
 public class RenderCommentsServlet extends HttpServlet {
 
   @Override
-  public void init() {}
-
-  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Query query = new Query("Message").addSort("time", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
