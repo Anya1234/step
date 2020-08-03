@@ -29,8 +29,11 @@ function checkUser() {
   });
 }
 
+/**
+*
+*/
 function getUploadUrl() {
-    fetch('/upload-url').then((response)=>
+  fetch('/upload-url').then((response)=>
     response.json()).then((url)=> {
     console.log(url);
     document.getElementById('addimage').action = url;
