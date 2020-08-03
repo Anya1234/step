@@ -38,12 +38,12 @@ public class HandleCommentsServlet extends HttpServlet {
     String font_size = request.getParameter("font_size");
     long time = System.currentTimeMillis();
 
+    UserService userService = UserServiceFactory.getUserService();
     if (!userService.isUserLoggedIn()) {
       String urlToRedirect = "/comment.html";
       response.sendRedirect(userService.createLoginURL(urlToRedirect));
       return;
     }
-    UserService userService = UserServiceFactory.getUserService();
     String username = userService.getCurrentUser().getNickname();
 
     if (text.length() == 0) {
