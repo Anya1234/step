@@ -18,7 +18,6 @@
 function checkUser() {
   fetch('/check-user').then((response)=>
     response.json()).then((isLoggedIn)=> {
-    console.log(isLoggedIn);
     if (isLoggedIn == false) {
       document.getElementById('addcontent').placeholder = 'log in first';
       document.getElementById('addcontent').disabled = true;
