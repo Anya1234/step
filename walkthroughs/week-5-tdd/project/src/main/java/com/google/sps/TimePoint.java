@@ -16,45 +16,38 @@ package com.google.sps;
 
 import java.util.Comparator;
 
-/**
- * Class representing a point of time
- */
+/** Class representing a point of time */
 public final class TimePoint {
   public static final int START_OF_DAY = getTimeInMinutes(0, 0);
   public static final int END_OF_DAY = getTimeInMinutes(23, 59);
   private final int time;
   private final String type;
 
-  /**
-   * A comparator for sorting ranges by their start time in ascending order.
-   */
-  public static final Comparator<TimePoint> ORDER_BY_TIME = new Comparator<TimePoint>() {
-    @Override
-    public int compare(TimePoint a, TimePoint b) {
-      return Long.compare(a.time, b.time);
-    }
-  };
+  /** A comparator for sorting ranges by their start time in ascending order. */
+  public static final Comparator<TimePoint> ORDER_BY_TIME =
+      new Comparator<TimePoint>() {
+        @Override
+        public int compare(TimePoint a, TimePoint b) {
+          return Long.compare(a.time, b.time);
+        }
+      };
 
   public TimePoint(int time, String type) {
     this.time = time;
     this.type = type;
   }
 
-  /**
-   * Returns the time of a point.
-   */
+  /** Returns the time of a point. */
   public int getTime() {
     return time;
   }
 
-  /**
-   * Returns the type of a point.
-   */
+  /** Returns the type of a point. */
   public String getType() {
     return type;
   }
 
-   public static int getTimeInMinutes(int hours, int minutes) {
+  public static int getTimeInMinutes(int hours, int minutes) {
     if (hours < 0 || hours >= 24) {
       throw new IllegalArgumentException("Hours can only be 0 through 23 (inclusive).");
     }

@@ -16,9 +16,9 @@ package com.google.sps;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Comparator;
 
 /**
  * Event is the container class for when a specific group of people are meeting and are therefore
@@ -54,30 +54,25 @@ public final class Event {
     this.attendees.addAll(attendees);
   }
 
-   public static final Comparator<Event> ORDER_BY_MEETING_START = new Comparator<Event>() {
-    @Override
-    public int compare(Event a, Event b) {
-      return Long.compare(a.when.start(), b.when.start());
-    }
-  };
+  public static final Comparator<Event> ORDER_BY_MEETING_START =
+      new Comparator<Event>() {
+        @Override
+        public int compare(Event a, Event b) {
+          return Long.compare(a.when.start(), b.when.start());
+        }
+      };
 
-  /**
-   * Returns the human-readable name for this event.
-   */
+  /** Returns the human-readable name for this event. */
   public String getTitle() {
     return title;
   }
 
-  /**
-   * Returns the {@code TimeRange} for when this event occurs.
-   */
+  /** Returns the {@code TimeRange} for when this event occurs. */
   public TimeRange getWhen() {
     return when;
   }
 
-  /**
-   * Returns a read-only set of required attendees for this event.
-   */
+  /** Returns a read-only set of required attendees for this event. */
   public Set<String> getAttendees() {
     // Return the attendees as an unmodifiable set so that the caller can't change our
     // internal data.
