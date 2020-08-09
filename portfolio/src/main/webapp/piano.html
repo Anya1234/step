@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
+    <head>
     <meta charset="UTF-8">
     <title>Piano</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="piano.js"></script>
-  </head>
+    </head>
 <body>
-  <div id="content">
-    <svg width="10000" height="100">
+    <div id="content">
+    <svg id="piano">
     </svg>
+    <script src = "piano_im.js"></script>
     <script src = "im_piano.js"> </script>
-    <p data-key="C" class = "key">C</p>
-    <p data-key="C#" class = "key">C#</p>
-    <p data-key="D" class = "key">D</p>
-    <p data-key="D#" class = "key">D#</p>
-    <p data-key="E" class = "key">E</p>
-    <p data-key="F" class = "key">F</p>
-    <p data-key="F#" class = "key">F#</p>
-    <p data-key="G" class = "key">G</p>
-    <p data-key="G#" class = "key">G#</p>
-    <p data-key="A" class = "key">A</p>
-    <p data-key="A#" class = "key">A#</p>
-    <p data-key="B" class = "key">B</p>
-    <p data-key="C2" class = "key">C</p>
-    <p data-key="C#2" class = "key">C#</p>
-    <p data-key="D2" class = "key">D</p>
-    <p data-key="D#2" class = "key">D#</p>
-    <p data-key="E2" class = "key">E</p>
+    <p data-key="C" class="key">C</p>
+    <p data-key="C#" class="key">C#</p>
+    <p data-key="D" class="key">D</p>
+    <p data-key="D#" class="key">D#</p>
+    <p data-key="E" class="key">E</p>
+    <p data-key="F" class="key">F</p>
+    <p data-key="F#" class="key">F#</p>
+    <p data-key="G" class="key">G</p>
+    <p data-key="G#" class="key">G#</p>
+    <p data-key="A" class="key">A</p>
+    <p data-key="A#" class="key">A#</p>
+    <p data-key="B" class="key">B</p>
+    <p data-key="C2" class="key">C</p>
+    <p data-key="C#2" class="key">C#</p>
+    <p data-key="D2" class="key">D</p>
+    <p data-key="D#2" class="key">D#</p>
+    <p data-key="E2" class="key">E</p>
 
 
     <audio data-key="C" src="sounds/C.wav"></audio>
@@ -50,5 +51,5 @@
     <audio data-key="E2" src="sounds/E(2).wav"></audio>
 
     </div>
-  </body>
+    </body>
 </html>
