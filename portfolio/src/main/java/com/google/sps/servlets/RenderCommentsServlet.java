@@ -32,33 +32,8 @@ import javax.servlet.http.HttpServletResponse;
 /*
  *  Servlet that adds comments
  */
-@WebServlet("/handle-comments")
-public class DataServlet extends HttpServlet {
-
-  @Override
-  public void init() {}
-
-  @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String text = request.getParameter("add-content");
-    String color = request.getParameter("color");
-    String font_size = request.getParameter("font_size");
-    long time = System.currentTimeMillis();
-    if (text == "") {
-      return;
-    }
-
-    Entity commentEntity = new Entity("Message");
-    commentEntity.setProperty("text", text);
-    commentEntity.setProperty("color", color);
-    commentEntity.setProperty("font_size", font_size);
-    commentEntity.setProperty("time", time);
-
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(commentEntity);
-
-    response.sendRedirect("comment.html");
-  }
+@WebServlet("/render-comments")
+public class RenderCommentsServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -70,7 +45,8 @@ public class DataServlet extends HttpServlet {
       String text = (String) entity.getProperty("text");
       String color = (String) entity.getProperty("color");
       String font_size = (String) entity.getProperty("font_size");
-      Message message = new Message(text, color, font_size);
+      String username = (String) entity.getProperty("username");
+      Message message = new Message(text, color, font_size, username);
       messages.add(message);
     }
 
