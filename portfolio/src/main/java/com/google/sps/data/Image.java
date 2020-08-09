@@ -15,19 +15,13 @@
 package com.google.sps.data;
 
 /** item coding comment. */
-public final class Message {
+public final class Image {
 
-  private final String text;
-  private final String color;
-  private final String font_size;
-  private final String username;
-  private final String im_time;
+  private final String url;
+  private final long time;
 
-  public Message(String text, String color, String font_size, String username, String im_time) {
-    this.text = text;
-    this.color = color;
-    this.font_size = font_size;
-    this.username = username;
-    this.im_time = im_time;
+  public Image(String url, long time) {
+    this.url = url;
+    this.time = time;
   }
 }

@@ -33,11 +33,13 @@ public class HandleCommentsServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String im_time = request.getParameter("time");
     String text = request.getParameter("add-content");
     String color = request.getParameter("color");
     String font_size = request.getParameter("font_size");
     long time = System.currentTimeMillis();
 
+    System.out.println(im_time);
     UserService userService = UserServiceFactory.getUserService();
     if (!userService.isUserLoggedIn()) {
       String urlToRedirect = "/comment.html";
@@ -51,12 +53,13 @@ public class HandleCommentsServlet extends HttpServlet {
     }
 
     Entity commentEntity = new Entity("Message");
-    System.out.println(text);
     commentEntity.setProperty("text", text);
     commentEntity.setProperty("color", color);
     commentEntity.setProperty("font_size", font_size);
     commentEntity.setProperty("time", time);
     commentEntity.setProperty("username", username);
+    commentEntity.setProperty("im_time", im_time);
+
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
 
