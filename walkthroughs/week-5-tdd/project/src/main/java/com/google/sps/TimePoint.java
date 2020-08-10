@@ -18,10 +18,10 @@ import java.util.Comparator;
 
 /** Class representing a point of time */
 public final class TimePoint {
-  public static final int START_OF_DAY = getTimeInMinutes(0, 0);
-  public static final int END_OF_DAY = getTimeInMinutes(23, 59);
+  public static final int START_OF_DAY = 0;
+  public static final int END_OF_DAY = 23 * 60 + 59;
   private final int time;
-  private final String type;
+  private final boolean isStart;
 
   /** A comparator for sorting ranges by their start time in ascending order. */
   public static final Comparator<TimePoint> ORDER_BY_TIME =
@@ -32,9 +32,9 @@ public final class TimePoint {
         }
       };
 
-  public TimePoint(int time, String type) {
+  public TimePoint(int time, boolean isStart) {
     this.time = time;
-    this.type = type;
+    this.isStart = isStart;
   }
 
   /** Returns the time of a point. */
@@ -43,19 +43,7 @@ public final class TimePoint {
   }
 
   /** Returns the type of a point. */
-  public String getType() {
-    return type;
-  }
-
-  public static int getTimeInMinutes(int hours, int minutes) {
-    if (hours < 0 || hours >= 24) {
-      throw new IllegalArgumentException("Hours can only be 0 through 23 (inclusive).");
-    }
-
-    if (minutes < 0 || minutes >= 60) {
-      throw new IllegalArgumentException("Minutes can only be 0 through 59 (inclusive).");
-    }
-
-    return (hours * 60) + minutes;
+  public boolean isStart() {
+    return isStart;
   }
 }

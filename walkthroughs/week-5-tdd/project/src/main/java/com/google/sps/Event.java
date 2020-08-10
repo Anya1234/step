@@ -16,7 +16,6 @@ package com.google.sps;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,14 +52,6 @@ public final class Event {
     this.when = when;
     this.attendees.addAll(attendees);
   }
-
-  public static final Comparator<Event> ORDER_BY_MEETING_START =
-      new Comparator<Event>() {
-        @Override
-        public int compare(Event a, Event b) {
-          return Long.compare(a.when.start(), b.when.start());
-        }
-      };
 
   /** Returns the human-readable name for this event. */
   public String getTitle() {
