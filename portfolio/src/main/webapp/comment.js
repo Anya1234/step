@@ -19,13 +19,25 @@ function checkUser() {
   fetch('/check-user').then((response)=>
     response.json()).then((isLoggedIn)=> {
     if (isLoggedIn == false) {
-      document.getElementById('addcontent').placeholder = 'log in first';
+      document.getElementById('addcontent').placeholder =
+       'log in to leave comment';
       document.getElementById('addcontent').disabled = true;
       document.getElementById('color').disabled = true;
       document.getElementById('font_size').disabled = true;
       document.getElementById('button').disabled = true;
       document.getElementById('auth').value = 'login';
     }
+  });
+}
+
+/**
+* gets blobstore url to upload picture
+*/
+function getUploadUrl() {
+  fetch('/upload-url').then((response)=>
+    response.json()).then((url)=> {
+    console.log(url);
+    document.getElementById('addimage').action = url;
   });
 }
 
@@ -42,10 +54,52 @@ function addComment() {
       p.innerText = message['username'] + ':    ' + message['text'];
       p.style.color = message['color'];
       p.style.fontSize = message['font_size'];
-      document.body.prepend(p);
+      console.log(message['im_time']);
+      document.getElementById(message['im_time']).appendChild(p);
     }
   });
 }
 
-checkUser();
-addComment();
+/**
+* renders images and div class for comments
+*/
+function addImages() {
+  fetch('/render-images').then((response)=>
+    response.json()).then((images)=> {
+    console.log(images);
+    for (let i = 0; i < images.length; i++) {
+      const image = images[i];
+      const img = document.createElement('img');
+      const div = document.createElement('div');
+      img.src = image['url'];
+      div.id = image['time'];
+      document.body.append(img);
+      document.body.append(div);
+      renderCommentsForm(image['time']);
+    }
+  });
+}
+
+/**
+* renders form which sends image time
+* @param {string} time - time of uploading image
+*/
+function renderCommentsForm(time) {
+  const form = document.getElementById('comment').cloneNode(true);
+  form.hidden = false;
+  const textarea = document.createElement('input');
+  textarea.type = 'text';
+  textarea.name = 'time';
+  textarea.value = time;
+  textarea.hidden = true;
+  console.log(time);
+  form.insertBefore(textarea, form.firstChild);
+  document.body.append(form);
+}
+
+window.onload = function() {
+  checkUser();
+  getUploadUrl();
+  addImages();
+  addComment();
+};
